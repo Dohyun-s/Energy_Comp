@@ -18,26 +18,62 @@ Dohyun Kim & Jihoon Jung
 
 2021.08.15 test
 # 1. 부하량 예측
-## data source
+## Input data and data source
 - electricity : GIST Load data
 - weather : 기상자료개방포탈 | [링크](https://data.kma.go.kr/cmmn/main.do)
 - korea_electricity : 한국전력거래소_시간별 전력수요량(시간단위 전국 발전단 수요 데이터) | [링크](https://www.data.go.kr/data/15065266/fileData.do)
 
+example data
+
+timestamp | electricity | korea_electricity | temperature | ...
+---- | ---- | ---- | ----| ---
+| | | |
+| | | |
+
+
 ## prprocessing
 - timestamp : yyyy-mm-dd hh:mm 형식을 timestamp로 바꾸어줌.  
+```
+timestamp = [0] * length #initialization
+for i in range(length):
+  timestamp[i] = time.mktime(datetime.datetime.strptime(weather_df['timestamp'][i], '%Y-%m-%d %H:%M').timetuple())
+weather_df['timestamp'] = timestamp
+```
 - low pass filter
+```
+#figure size
+plt.rcParams['figure.figsize'] = [20, 5]
+
+#filter variable
+b, a = signal.butter(1, 0.3)
+
+y = signal.filtfilt(b, a, xn)
+
+plt.figure
+plt.subplot(1,1,1)
+plt.plot(t, xn, 'b')
+plt.plot(t, y, 'r') #lfilter
+plt.legend(('noisy signal','filtfilt'), loc='best')
+plt.grid(True)
+plt.show()
+
+```
+
 ![initial](https://user-images.githubusercontent.com/48517782/129563138-da10c8de-fbe1-4f1c-8f03-619c550a1d46.png)
 Figure. low pass filter
 ![initial](https://user-images.githubusercontent.com/48517782/129563078-0ad0ce38-fef3-47cf-908c-47793ddec420.png)
 Figure. low pass filter (zoom-in)
-- trim outlier
-- 
+- trim outlier (electricity < 2000)
 
-## Background : 그림첨부
+## Model : LSTnet 
+그림첨부
 - window = 7 (day) 
 - shift = 1 (day)
+![initial](https://www.researchgate.net/publication/350511416/figure/fig1/AS:1007244028174337@1617157098300/LSTM-sliding-window-prediction-principle.png)
+![initial](https://user-images.githubusercontent.com/48517782/129564609-c47ab851-235b-491d-a781-6c64ab6280c7.png)
 
 ## Running model
+
 ### set-up
 To get started with this model, 
 
