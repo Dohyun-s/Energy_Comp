@@ -65,10 +65,10 @@ Figure. low pass filter
 Figure. low pass filter (zoom-in)
 - trim outlier (electricity < 2000)
 
-## Model : LSTnet 
+## Model : LSTnet
 그림첨부
 - window = 7 (day) 
-- shift = 1 (day)
+- label(shift) = 1 (day)
 ![initial](https://www.researchgate.net/publication/350511416/figure/fig1/AS:1007244028174337@1617157098300/LSTM-sliding-window-prediction-principle.png)
 ![initial](https://user-images.githubusercontent.com/48517782/129564609-c47ab851-235b-491d-a781-6c64ab6280c7.png)
 1. Reference [2]에 있는 Lstnet을 참조함, model에 있는 skipGRU, CNN-GRU, attention을 이용한 postskipGRU, 그리고 autoregression을 합친 모델을 만듬
