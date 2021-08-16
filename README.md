@@ -71,8 +71,13 @@ Figure. low pass filter (zoom-in)
 - shift = 1 (day)
 ![initial](https://www.researchgate.net/publication/350511416/figure/fig1/AS:1007244028174337@1617157098300/LSTM-sliding-window-prediction-principle.png)
 ![initial](https://user-images.githubusercontent.com/48517782/129564609-c47ab851-235b-491d-a781-6c64ab6280c7.png)
-
+1. Reference [2]에 있는 Lstnet을 참조함, model에 있는 skipGRU, CNN-GRU, attention을 이용한 postskipGRU, 그리고 autoregression을 합친 모델을 만듬
+2. input data를 24시간 받아왔을 때, 다음 25시를 예측하는 모델을 만듬, 그리고 windows를 활용해 다음날 데이터를 예측하는 모델을 만듬
+3. loss는 MSE, optimizer는 Adam, learning rate=0.001 정도 설정
+4. Ensemble을 이용하여 temperature데이터, 한국전력공사의 데이터, 그리고 지스트 전력 데이터를 각각 모델을 만든 후, concat시켜 train시키는 방향으로 만듬
+5. keras tuner를 이용하여 hyperparameter tuning을 진행함, 확률적으로 찾아주는 BayesianOptimizer 이용,
 ## Running model
+
 
 ### set-up
 To get started with this model, 
