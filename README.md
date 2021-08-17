@@ -66,16 +66,15 @@ Figure. low pass filter (zoom-in)
 - trim outlier (electricity < 2000)
 
 ## Model : LSTnet
-그림첨부
-- window = 7 (day) 
-- label(shift) = 1 (day)
+1. LSTNET은 skipGRU, CNN-GRU, attention을 이용한 postskipGRU, 그리고 autoregression을 합쳐진 모델임. (Reference[2] 참고)   
+![initial](https://user-images.githubusercontent.com/48517782/129564609-c47ab851-235b-491d-a781-6c64ab6280c7.png)   
+  - `loss function= MSE`, `optimizer=Adam`, `learning rate=0.001`으로 설정   
+2. 7 day * 24 day/hour의 timeseries 데이터(`Input_window = 7`)로 다음날 (`sliding_width = 1`) 24 hour를 예측(`label_width = 1`)하는 모델을 만듬.   
 ![initial](https://www.researchgate.net/publication/350511416/figure/fig1/AS:1007244028174337@1617157098300/LSTM-sliding-window-prediction-principle.png)
-![initial](https://user-images.githubusercontent.com/48517782/129564609-c47ab851-235b-491d-a781-6c64ab6280c7.png)
-1. Reference [2]에 있는 Lstnet을 참조함, model에 있는 skipGRU, CNN-GRU, attention을 이용한 postskipGRU, 그리고 autoregression을 합친 모델을 만듬
-2. input data를 24시간 받아왔을 때, 다음 25시를 예측하는 모델을 만듬, 그리고 windows를 활용해 다음날 데이터를 예측하는 모델을 만듬
-3. loss는 MSE, optimizer는 Adam, learning rate=0.001 정도 설정
-4. Ensemble을 이용하여 temperature데이터, 한국전력공사의 데이터, 그리고 지스트 전력 데이터를 각각 모델을 만든 후, concat시켜 train시키는 방향으로 만듬
-5. keras tuner를 이용하여 hyperparameter tuning을 진행함, 확률적으로 찾아주는 BayesianOptimizer 이용,
+3. LSTNET으로 GIST 전력 사용량, 대한민국 전력 사용량 그리고 기온의 각각 모델을 만들고, 각각 예측모델의 output을 concat시켜 GIST 전력사용량을 예측하는 ensemble 모델로 train함.   
+![initial](https://static.commonlounge.com/fp/600w/E4CzBIUXn3fadwbqDNNpMghCK1520496433_kc)   
+4. `keras tuner`는 TensorFlow 프로그램에 대한 최적의 하이퍼파라미터 세트를 선택하는 데 도움을 주는 라이브러리이다. `BayesianOptimizer`은 gaussian process으로 적합한 hyperparameter tuning한다. `max_trials=80`으로, `objective='val_loss'`으로 설정하여 loss value가 가장 낮은 hyperparameter를 선정하였다.
+
 ## Running model
 
 
@@ -87,7 +86,7 @@ To get started with this model,
 
 
 # 3. 캠퍼스 BESS스 케쥴링 알고리즘
-
+Library `pulp`로 linear optimization.
 
 # Reference
 - Tensorflow2 | [page](https://www.tensorflow.org/tutorials/structured_data/time_series?hl=ko)
