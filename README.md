@@ -157,6 +157,8 @@ korea_electricity 2.855213455813887e-06
 
 # 2. 태양광 발전량 예측
 
+1. 부하량 예측 발전 모델과 비슷하게 모델을 만들었다. 다른 점은 input data에 temperature데이터와 지스트 태양광 발전량 예측을 가지고 ensemble model을 만들었다는 점이다.
+
 
 # 3. 캠퍼스 BESS 스케쥴링 알고리즘
 Library `pulp`로 cost를 최소화해주는 BESS schedule을 찾아주는 linear optimization을 구현하였음. `optimization(season, electricity_data, PV_data)`으로 사용가능하다. argument는 24시간 동안 사용한 electricity 값(e.g. electricity_t)과 PV 값(e.g. PV_t), 그리고 계절(e.g. 'summer')이다. 함수의 출력값은 `total_cost`와 시간별 `bess_value`이다.
@@ -174,6 +176,10 @@ Library `pulp`로 cost를 최소화해주는 BESS schedule을 찾아주는 linea
 >>> print(bess_value)
 [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 193.2964, 250.0, 0.0, 250.0, 59.50512, 180.68505, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ```
+
+# 실행파일
+''sh
+python optimization.py
 # Reference
 - Tensorflow2 | [page](https://www.tensorflow.org/tutorials/structured_data/time_series?hl=ko)
 - Modeling Long- and Short-Term Temporal Patterns with Deep Neural Networks | [paper](https://arxiv.org/abs/1703.07015)
