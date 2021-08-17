@@ -170,8 +170,23 @@ prediction_result = model_predict(reconstructed_model, 2018_11_01_data)
 ```
 # 2. 태양광 발전량 예측
 
-1. 부하량 예측 발전 모델과 비슷하게 모델을 만들었다. 다른 점은 input data에 temperature데이터와 지스트 태양광 발전량 예측을 가지고 ensemble model을 만들었다는 점이다.
+1. 부하량 예측 발전 모델과 비슷하게 모델을 만들었다. 다른 점은 input data에 temperature 데이터와 지스트 태양광 발전량 예측을 가지고 ensemble model을 만들었다는 점이다.
 
+## Running model
+2018년 11월 1일 데이터 [링크](https://github.com/Dohyun-s/Energy_Comp/blob/main/data/Load_raw_data_20210807.csv)
+
+```
+#import libarary
+from pulp import *
+import tensorflow as tf
+import pandas as pd
+
+#load model
+reconstructed_model = keras.models.load_model("/model_address", custom_objects = {'rse':rse,'PostSkipTrans': PostSkipTrans, 'PreSkipTrans':PreSkipTrans,'PreARTrans':PreARTrans, 'PostARTrans':PostARTrans} )
+
+#predict
+prediction_result = model_predict(reconstructed_model, 2018_11_01_data)
+```
 
 # 3. 캠퍼스 BESS 스케쥴링 알고리즘
 Library `pulp`로 cost를 최소화해주는 BESS schedule을 찾아주는 linear optimization을 구현하였음. `optimization(season, electricity_data, PV_data)`으로 사용가능하다. argument는 24시간 동안 사용한 electricity 값(e.g. electricity_t)과 PV 값(e.g. PV_t), 그리고 계절(e.g. 'summer')이다. 함수의 출력값은 `total_cost`와 시간별 `bess_value`이다.
