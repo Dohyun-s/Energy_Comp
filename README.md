@@ -154,7 +154,26 @@ korea_electricity 2.855213455813887e-06
 4. `keras tuner`는 TensorFlow 프로그램에 대한 최적의 하이퍼파라미터 세트를 선택하는 데 도움을 주는 라이브러리이다. `BayesianOptimizer`은 gaussian process으로 적합한 hyperparameter tuning한다. `max_trials=80`으로, `objective='val_loss'`으로 설정하여 loss value가 가장 낮은 hyperparameter를 선정하였다.
 
 ## Running model
+2018년 11월 1일 데이터 [링크](https://github.com/Dohyun-s/Energy_Comp/blob/main/data/Load_raw_data_20210807.csv)
 
+```
+#import libarary
+from pulp import *
+import tensorflow as tf
+import pandas as pd
+
+#load model
+reconstructed_model = keras.models.load_model("/EnerGist_2021.07/LSTNet/elec_batch_129_453.h5", custom_objects = {'rse':rse,'PostSkipTrans': PostSkipTrans, 'PreSkipTrans':PreSkipTrans,'PreARTrans':PreARTrans, 'PostARTrans':PostARTrans} )
+
+#predict
+load_next=np.array(load_sum).reshape(1,-1)
+output=[]
+for i in range(0,24):
+  out=model_load.predict(arr_)
+  output.append(out)
+  arr_=np.append(arr_[0][1:],lstnet.predict(arr_))
+  arr_=arr_.reshape(1,-1)
+```
 # 2. 태양광 발전량 예측
 
 1. 부하량 예측 발전 모델과 비슷하게 모델을 만들었다. 다른 점은 input data에 temperature데이터와 지스트 태양광 발전량 예측을 가지고 ensemble model을 만들었다는 점이다.
