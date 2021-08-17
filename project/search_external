@@ -1,0 +1,18 @@
+def search_external(input_date, input_df):
+  """
+  input_date : string ; input
+  input_df : pandas dataframe
+  --------------
+  output : panda dataframe
+  """
+  if not ('datetime' in input_df.columns): 
+    print("ERROR")
+    
+  if ('date' in input_df.columns): 
+    print("ERROR")
+
+  input_df["date"] = [0] * input_df.shape[0]
+  for i in range(input_df.shape[0]):
+    input_df["date"][i] = input_df["datetime"][i].split()[0]
+  input_df = input_df[input_df["date"] == input_date]
+  return input_df
