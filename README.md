@@ -30,7 +30,7 @@ timestamp | electricity | korea_electricity | temperature | ...
 | | | |
 
 
-## prprocessing
+## preprocessing
 - timestamp : yyyy-mm-dd hh:mm 형식을 timestamp로 바꾸어줌.  
 ```
 timestamp = [0] * length #initialization
