@@ -85,9 +85,22 @@ To get started with this model,
 # 2. 태양광 발전량 예측
 
 
-# 3. 캠퍼스 BESS스 케쥴링 알고리즘
-Library `pulp`로 linear optimization.
-
+# 3. 캠퍼스 BESS 스케쥴링 알고리즘
+Library `pulp`로 cost를 최소화해주는 BESS schedule을 찾아주는 linear optimization을 구현하였음. `optimization(season, electricity_data, PV_data)`으로 사용가능하다. argument는 24시간 동안 사용한 electricity 값(e.g. electricity_t)과 PV 값(e.g. PV_t), 그리고 계절(e.g. 'summer')이다. 함수의 출력값은 `total_cost`와 시간별 `bess_value`이다.
+```
+>>> PV_t=[0,0,0,0,0,0,0,0.6,11.8,58.5,125.2,196.1,235.7,308.1,68.8,48,25,1.5,0,0,0,0,0,0] 
+>>> electricity_t=[4972.86446897, 4827.32813707, 4714.39951693, 4640.4637654 ,
+       4619.08798299, 4696.02395711, 4934.15191917, 5358.15019654,
+       5870.89139808, 6269.93405485, 6444.9726441 , 6461.49278899,
+       6454.26552802, 6488.01214138, 6506.49025023, 6471.5219868 ,
+       6409.99699496, 6273.83475456, 6020.27016168, 5780.28216133,
+       5637.47629486, 5505.49176825, 5340.39785949, 5166.06439475 ] #define electricity
+>>> total_cost, bess_value = optimization('summer', electricity_t, PV_t)
+>>> print(total_cost)
+11904816.96244172
+>>> print(bess_value)
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 193.2964, 250.0, 0.0, 250.0, 59.50512, 180.68505, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+```
 # Reference
 - Tensorflow2 | [page](https://www.tensorflow.org/tutorials/structured_data/time_series?hl=ko)
 - Modeling Long- and Short-Term Temporal Patterns with Deep Neural Networks | [paper](https://arxiv.org/abs/1703.07015)
