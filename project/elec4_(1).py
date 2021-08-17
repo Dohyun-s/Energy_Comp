@@ -7,8 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1f7hqskb6FCNun3ShnZwnJMM_S5bvySNU
 """
 
-from google.colab import drive
-drive.mount('/content/drive/')
+#from google.colab import drive
+#drive.mount('/content/drive/')
 
 # Commented out IPython magic to ensure Python compatibility.
 # %load_ext tensorboard
