@@ -166,13 +166,7 @@ import pandas as pd
 reconstructed_model = keras.models.load_model("/EnerGist_2021.07/LSTNet/elec_batch_129_453.h5", custom_objects = {'rse':rse,'PostSkipTrans': PostSkipTrans, 'PreSkipTrans':PreSkipTrans,'PreARTrans':PreARTrans, 'PostARTrans':PostARTrans} )
 
 #predict
-load_next=np.array(load_sum).reshape(1,-1)
-output=[]
-for i in range(0,24):
-  out=model_load.predict(arr_)
-  output.append(out)
-  arr_=np.append(arr_[0][1:],lstnet.predict(arr_))
-  arr_=arr_.reshape(1,-1)
+prediction_result = model_predict(reconstructed_model, 2018_11_01_data)
 ```
 # 2. 태양광 발전량 예측
 
