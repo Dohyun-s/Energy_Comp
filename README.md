@@ -57,11 +57,64 @@ plt.show()
 
 ```
 
+
+
 ![initial](https://user-images.githubusercontent.com/48517782/129563138-da10c8de-fbe1-4f1c-8f03-619c550a1d46.png)
 Figure. low pass filter
 ![initial](https://user-images.githubusercontent.com/48517782/129563078-0ad0ce38-fef3-47cf-908c-47793ddec420.png)
 Figure. low pass filter (zoom-in)
 - trim outlier (electricity < 2000)
+```
+#remove outlier data (the sequence of removal is important to keep the consistency of index)
+df_data2 = df_data
+df_data2 = df_data2.drop(list(range(3739,3742)), axis=0)
+df_data2 = df_data2.drop(list(range(3595,3598)), axis=0)
+df_data2 = df_data2.drop(list(range(2472,2499)), axis=0)
+df_data2 = df_data2.drop(list(range(2288,2291)), axis=0)
+df_data2 = df_data2.drop(list(range(1813,1820)), axis=0)
+```
+![data_cleaning](https://user-images.githubusercontent.com/48517782/129665352-436806b9-359e-44e2-aa25-962ffe0ab472.png)
+
+- feature significance
+```
+from sklearn.ensemble import RandomForestRegressor
+from matplotlib import pyplot
+# split into input and output
+X = df_data.iloc[:, 1:] #timestamp
+y = df_data.iloc[:, 0]
+# fit random forest model
+model = RandomForestRegressor(n_estimators=500, random_state=1)
+model.fit(X, y)
+# show importance scores
+names = df_data.columns.values[1:]
+for name, score in zip(names, model.feature_importances_):
+  print(name, score)
+print('------------------------------------------------------')
+```
+
+```
+electricity 5.1648249770227e-07
+year 0.1641875308457792
+month 0.829884928244495
+date 0.005837147814393805
+day 5.034596613288041e-05
+time 2.350464802388303e-06
+temperature 7.149524364290612e-07
+강수량(mm) 2.7390410543482482e-08
+풍속(m/s) 2.794462996947997e-07
+풍향(16방위) 1.4122559125107157e-07
+습도(%) 5.663451765984923e-07
+증기압(hPa) 3.6992711347979863e-06
+이슬점온도(°C) 3.963274619044288e-06
+현지기압(hPa) 1.433693757345914e-05
+해면기압(hPa) 1.1197462280482841e-05
+전운량(10분위) 8.481221874674216e-07
+시정(10m) 1.0409165837576703e-06
+지면온도(°C) 3.648376055851243e-07
+```
+
+![initial](https://user-images.githubusercontent.com/48517782/129665073-c3756e12-1067-4916-91f3-35742629bf39.png)
+
 
 ## Model : LSTnet
 1. LSTNET은 skipGRU, CNN-GRU, attention을 이용한 postskipGRU, 그리고 autoregression을 합쳐진 모델임. (Reference[2] 참고)   
