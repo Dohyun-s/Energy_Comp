@@ -2,7 +2,7 @@
 
 # Team: EnerGIST
 
-Dohyun Kim & Jihoon Jung
+Dohyun Kim & Jihun Jeung
 
 프로젝트 진행상황:
 
@@ -15,8 +15,6 @@ Dohyun Kim & Jihoon Jung
 6. PULP library를 공부 중. 이를 적용 예정.
 7. Spark를 이용해 PV Data과 load data를 input으로 전기요금을 계산해볼 예정 (?)
 
-
-2021.08.15 test
 # 1. 부하량 예측
 ## Input data and data source
 - electricity : GIST Load data
@@ -76,11 +74,6 @@ Figure. low pass filter (zoom-in)
 4. `keras tuner`는 TensorFlow 프로그램에 대한 최적의 하이퍼파라미터 세트를 선택하는 데 도움을 주는 라이브러리이다. `BayesianOptimizer`은 gaussian process으로 적합한 hyperparameter tuning한다. `max_trials=80`으로, `objective='val_loss'`으로 설정하여 loss value가 가장 낮은 hyperparameter를 선정하였다.
 
 ## Running model
-
-
-### set-up
-To get started with this model, 
-
 
 # 2. 태양광 발전량 예측
 
