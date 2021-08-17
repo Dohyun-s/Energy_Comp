@@ -3,6 +3,24 @@
 from pulp import *
 import numpy as np
 
+def model_predict(model, load_next):
+  """
+  INPUT
+  model : LSTNET model 
+  load_next : (numpy array) the real value
+  -------------------------------------
+  OUTPUT
+  output : (array) predicted value
+  """
+  load_next=np.array(load_sum).reshape(1,-1)
+  output=[]
+  for i in range(0,24):
+    out=model_load.predict(arr_)
+    output.append(out)
+    arr_=np.append(arr_[0][1:],model.predict(arr_))
+    arr_=arr_.reshape(1,-1)
+  return output
+
 def optimization(season, electricity_data, PV_data) :
   """
   Input
